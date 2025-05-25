@@ -1,7 +1,16 @@
 import { type InputProps, type IFormState } from "../types";
 import React, { useState } from "react";
 
-
+/**
+ * 
+ * @returns *formState*: estado del formulario
+ * @returns *handleInputChange*: controlador para el cambio del los inputs
+ * @returns *handleSubmit*: controlador para el submit del form
+ * 
+ * @example
+ * ```ts
+ *  const { formState,handleSubmit,handleInputChange } = useFormHandlers()
+ */
 const useFormHandlers = () => {
 
     const [formState, setFormState] = useState<IFormState>({ username: "", email: "", isSubmitted: false });
@@ -14,7 +23,7 @@ const useFormHandlers = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(formState.username.length > 0 || formState.email.length > 0){
+        if(formState.username.length > 0 && formState.email.length > 0){
             setFormState({ ...formState, isSubmitted: true })
         }
        
@@ -68,7 +77,6 @@ export const UserForm: React.FC = () => {
                 <Input autoFocus text="Username" name="username" type="text" onChange={handleInputChange} value={formState.username} />
                 <Input text="Email"  name="email" type="email" onChange={handleInputChange} value={formState.email} />
                 <button className="bg-black text-white font-semibold w-full rounded py-2 mt-6 cursor-pointer active:opacity-75  transition-all duration-250">Enviar</button>
-
             </form>
 
             <ShownResults {...formState} isSubmitted={formState.isSubmitted} />
